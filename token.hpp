@@ -74,12 +74,12 @@ class Token{
         para AHORRO DE MEMORIA*/
         //Constructor de struct
         Token(TokenType(tipo), std::string(val), size_t(l), size_t(c))
-            : tipo(tipo), valor(std::move(val)), linea(l), columna(c){}
+            : linea(l), columna(c), valor(std::move(val)), tipo(tipo){}
 
         /*El const al final de cada método significa que
         no modificará ningun atributo de la clase*/
         TokenType getType() const; 
-        const std::string getValueString() const; //TokenType -> String para impresión
+        const std::string getTypeString() const; //TokenType -> String para impresión
         const std::string& getValue() const;
         size_t getLine() const;
         size_t getColumn() const;
