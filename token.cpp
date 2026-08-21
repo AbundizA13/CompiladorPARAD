@@ -13,6 +13,11 @@ size_t Token::getLine() const{
 size_t Token::getColumn() const{
     return columna;
 }
+const std::string Token::printContent() const{
+    return "Token(" + getTypeString() + ", '" + valor + "', " +
+           std::to_string(linea) + ":" + std::to_string(columna) + ")";
+}
+
 //PARECE HARDCODING PERO ES LA ÚNICA MANERA (O UN DICCIONARIO)
 const std::string Token::getTypeString() const{
     switch(tipo){

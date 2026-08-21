@@ -8,7 +8,6 @@
 - El lexer debe crear tokens usando el constructor:
 - El parser solo consulta datos de la clase token mediante métodos .get()
 - FDA representa EOF (Fin Del Archivo).
-- 
 */
 
 enum class TokenType{ //Uso "TokenType::TIPO", usar getTypeString(TIPO) para impresión.
@@ -91,7 +90,7 @@ class Token{
         const std::string& getValue() const;
         size_t getLine() const;
         size_t getColumn() const;
-        void printContent() const;
+        const std::string printContent() const;
         //Falta cuerpo lógico en token.cpp
 };
 
