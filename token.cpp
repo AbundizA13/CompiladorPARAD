@@ -83,11 +83,11 @@ const std::string Token::getTypeString() const{
         case TokenType::ELSE:
             return "SINO";
         case TokenType::ELIF:
-            return "SINO_SI";
+            return "ELIF";
         case TokenType::WHILE:
             return "MIENTRAS";
         case TokenType::FOR:
-            return "PARA";
+            return "FOR";
         case TokenType::DEF:
             return "FUNCION";
         case TokenType::CLASS:
@@ -104,7 +104,7 @@ const std::string Token::getTypeString() const{
             return "NULO";
         case TokenType::IN:
             return "EN";
-        case TokenType::NEWLIINE:
+        case TokenType::NEWLINE:
             return "NUEVA_LINEA";
         case TokenType::WHITESPACE:
             return "ESPACIO";

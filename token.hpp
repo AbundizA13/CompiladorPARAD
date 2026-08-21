@@ -3,6 +3,14 @@
 #include <string>
 #include <utility>
 
+/*
+- No cambiar los nombres ni el orden de TokenType.
+- El lexer debe crear tokens usando el constructor:
+- El parser solo consulta datos de la clase token mediante métodos .get()
+- FDA representa EOF (Fin Del Archivo).
+- 
+*/
+
 enum class TokenType{ //Uso "TokenType::TIPO", usar getTypeString(TIPO) para impresión.
     IDENTIFIER,
     NUMBER,
@@ -56,7 +64,7 @@ enum class TokenType{ //Uso "TokenType::TIPO", usar getTypeString(TIPO) para imp
     NONE,
     IN,
 
-    NEWLIINE,
+    NEWLINE,
     WHITESPACE,
     COMMENT,
     UNKNOWN,
