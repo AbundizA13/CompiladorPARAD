@@ -6,36 +6,34 @@
 #include <map>
 #include "token.hpp"
 
-using namespace std;
-
 class LexicalAnalyzer {
     private:
     // Mis métodos y atributos privados
     bool esSimbolo(char c);
-    bool esSimboloValido(const string& s);
+    bool esSimboloValido(const std::string& s);
     
-    TokenType obtenerTipoSimbolo(const string& s);
+    TokenType obtenerTipoSimbolo(const std::string& s);
     
     void leerCadena(char delimitador);
     void leerComentario();
     
-    vector<Token> tokens;
-    string input;
-    size_t posicion;
-    size_t linea;
-    size_t columna;
-    map<string, TokenType> palabrasReservadas;
+    std::vector<Token> tokens;
+    std::string input;
+    std::size_t posicion;
+    std::size_t linea;
+    std::size_t columna;
+    std::map<std::string, TokenType> palabrasReservadas;
     std::map<std::string, TokenType> simbolos;
     
     public:
     
     // Mis métodos y atributos publicos
-    LexicalAnalyzer(const string& fuente);
+    LexicalAnalyzer(const std::string& fuente);
     void leerNumero();
     void leerIdentificador();
     void leerSimbolo();
     void analyze();
-    const vector<Token>& getTokens() const;
+    const std::vector<Token>& getTokens() const;
 };
 
 #endif

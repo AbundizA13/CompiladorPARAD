@@ -167,6 +167,7 @@ bool Parser::hasStatementSeparator() const {
     if (position == 0 || currentToken() == nullptr) {
         return false;
     }
+    //Si la línea del token actual es mayor a la del token pasado, hubo salto de línea
     return currentToken()->getLine() > tokens[position - 1].getLine();
 }
 
@@ -303,13 +304,13 @@ std::unique_ptr<Expression> Parser::parseTerm() {
 }
 
 std::unique_ptr<Expression> Parser::parseFactor() {
-    if (match(TokenType::L_PAR)) {
+    if (match(TokenType::L_PAR)) { //Parentesis
         consume(TokenType::L_PAR);
         auto expression = parseComparison();
         consume(TokenType::R_PAR);
         return expression;
     }
-    if (match(TokenType::IDENTIFIER)) {
+    if (match(TokenType::IDENTIFIER)) { //Identificadores y funciones
         const std::string name = advance().getValue();
         if (match(TokenType::L_PAR)) {
             return parseFunctionCall(name);
@@ -318,7 +319,7 @@ std::unique_ptr<Expression> Parser::parseFactor() {
     }
     if (match(TokenType::NUMBER) || match(TokenType::STRING) ||
         match(TokenType::TRUE) || match(TokenType::FALSE) ||
-        match(TokenType::NONE)) {
+        match(TokenType::NONE)) { //Literales
         const Token& token = advance();
         return std::make_unique<Literal>(token.getValue(), token.getType());
     }

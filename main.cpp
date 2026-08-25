@@ -2,24 +2,23 @@
 #include "parser.hpp"
 #include "LexerAnalyzerClass.hpp"
 
+#include <windows.h>
 #include <iostream>
 #include <vector>
 #include <fstream>
 #include <string>
 #include <sstream>
 
-using namespace std;
-
 // Esta funcion lee archivos
-string leerArchivo(const std::string& nombreArchivo) {
-    ifstream archivo(nombreArchivo);
+std::string leerArchivo(const std::string& nombreArchivo) {
+    std::ifstream archivo(nombreArchivo);
     
     if (!archivo.is_open()) {
-        cerr<<"Error: No se puede abrir el archivo"<<nombreArchivo<<endl;
+        std::cerr<<"Error: No se puede abrir el archivo"<<nombreArchivo<<std::endl;
         return "";
     }
     
-    stringstream buffer;
+    std::stringstream buffer;
     buffer<<archivo.rdbuf();
     archivo.close();
     
@@ -27,10 +26,10 @@ string leerArchivo(const std::string& nombreArchivo) {
 }
 
 int main() {
-	/*Vector provisional, mientras falta el lexer y
-    procesador de archivos de THIAGO.*/
+    SetConsoleOutputCP(CP_UTF8);    
+    SetConsoleCP(CP_UTF8);
 	// Meter los archivos de texto aqui
-    string codigo = leerArchivo("Programa.txt");
+    std::string codigo = leerArchivo("Programa.txt");
     
     // 1. Lexer para leer codigo
     LexicalAnalyzer lexer(codigo);
@@ -39,11 +38,13 @@ int main() {
     // 2. Obtener los tokens del lexer (El vector de tokens)
     const auto& tokens = lexer.getTokens();
     
+    std::cout<< "TOKENS (Analizador Léxico):\n\n";
     // 3. Lista de identificacion
     for (const auto& token : tokens) {
-        cout << token.printContent() << endl;
+        std::cout << token.printContent() << std::endl;
     }
 
+    std::cout << "\nAST (Analizador Sintáctico):\n\n";
 	try {
 		Parser parser(tokens);
 		const Program program = parser.parse();
@@ -52,8 +53,8 @@ int main() {
 		std::cerr << "Error de sintaxis: " << error.what() << '\n';
 	}
 
-    cout<<"\n\nPresiona Enter para salir..."<<endl;
-    cin.get();
+    std::cout<<"\n\nPresiona Enter para salir..."<<std::endl;
+    std::cin.get();
     
 	return 0;
 }
