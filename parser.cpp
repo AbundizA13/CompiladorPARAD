@@ -1,4 +1,5 @@
 #include "parser.hpp"
+#include "token.hpp"
 
 #include <sstream>
 
@@ -159,10 +160,33 @@ std::string Parser::tokenTypeName(TokenType type) {
     return token.getTypeString();
 }
 
+bool Parser::hasStatementSeparator() const {
+    if (match(TokenType::SEMICOLON) || match(TokenType::NEWLINE)) {
+        return true;
+    }
+    if (position == 0 || currentToken() == nullptr) {
+        return false;
+    }
+    return currentToken()->getLine() > tokens[position - 1].getLine();
+}
+
+void Parser::consumeStatementSeparators() {
+    while (match(TokenType::SEMICOLON) || match(TokenType::NEWLINE)) {
+        advance();
+    }
+}
+
 Program Parser::parse() {
     std::vector<std::unique_ptr<Statement>> statements;
     while (!isAtEnd()) {
         statements.push_back(parseStatement());
+        if (!isAtEnd()) {
+            if (!hasStatementSeparator()) {
+                throw ParserSyntaxError(
+                    "Se esperaba un salto de línea o ';' entre sentencias");
+            }
+            consumeStatementSeparators();
+        }
     }
     return Program(std::move(statements));
 }
@@ -201,6 +225,13 @@ std::vector<std::unique_ptr<Statement>> Parser::parseBlock() {
     std::vector<std::unique_ptr<Statement>> statements;
     while (!isAtEnd() && !match(TokenType::R_BRACE)) {
         statements.push_back(parseStatement());
+        if (!match(TokenType::R_BRACE)) {
+            if (!hasStatementSeparator()) {
+                throw ParserSyntaxError(
+                    "Se esperaba un salto de línea o ';' entre sentencias");
+            }
+            consumeStatementSeparators();
+        }
     }
     consume(TokenType::R_BRACE);
     return statements;

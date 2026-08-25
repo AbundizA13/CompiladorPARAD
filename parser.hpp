@@ -135,6 +135,9 @@ private:
 
     static std::string tokenTypeName(TokenType type);
 
+    bool hasStatementSeparator() const;
+    void consumeStatementSeparators();
+
     std::vector<std::unique_ptr<Statement>> parseBlock();
     std::unique_ptr<Statement> parseStatement();
     std::unique_ptr<Statement> parseAssignment();
